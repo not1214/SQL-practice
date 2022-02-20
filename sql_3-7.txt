@@ -28,15 +28,13 @@ SELECT * FROM 気象観測
 SELECT * FROM 気象観測
  WHERE 月 IN (3, 5, 7);
 
-SELECT * FROM 気象観測
- WHERE 月 ANY (3, 5, 7);
+ WHERE 月 = 3 OR 月 = 5 OR 月 = 7;
 
 8.
 SELECT * FROM 気象観測
  WHERE 月 NOT IN (3, 5, 7);
 
-SELECT * FROM 気象観測
- WHERE 月 NOT ANY (3, 5, 7);
+ WHERE 月 <> 3 OR 月 <> 5 OR 月 <> 7;
 
 9.
 SELECT * FROM 気象観測
