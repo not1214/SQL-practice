@@ -1,0 +1,30 @@
+DELETE FROM 家計簿
+ WHERE 出金額 > 0;
+
+SELECT *
+  FROM 家計簿
+ WHERE 出金額 IS NULL;
+
+SELECT * FROM 家計簿
+ WHERE メモ LIKE '%1月%';
+
+SELECT * FROM 家計簿
+ WHERE メモ LIKE '%100$%' ESCAPE '$';
+
+SELECT * FROM 家計簿
+ WHERE 出金額 BETWEEN 100 AND 3000;
+
+SELECT * FROM 家計簿
+ WHERE 費目 IN ('食費', '交際費');
+
+SELECT * FROM 家計簿
+ WHERE 費目 NOT IN ('食費', '交際費');
+
+UPDATE 湊くんの買い物リスト
+   SET 価格 = 6200
+ WHERE 名称 = 'スッキリ勇者クエスト'
+   AND 販売店 = 'B';
+
+SELECT * FROM 家計簿
+ WHERE (販売店 = 'A' OR 販売店 = 'B')
+   AND (カテゴリ = 'ゲーム' OR カテゴリ = 'DVD');
