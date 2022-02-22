@@ -1,0 +1,80 @@
+5-1
+
+1.
+A.
+UPDATE 試験結果
+   SET 午後１ = 80 * 4 - (86 + 68 + 91)
+ WHERE 受験者ID = 'SW1046';
+
+B.
+UPDATE 試験結果
+   SET 論述 = 68 * 4 - (65 + 53 + 70)
+ WHERE 受験者ID = 'SW1350';
+
+C.
+UPDATE 試験結果
+   SET 午前 = 56 * 4 - (59 + 56 + 36)
+ WHERE 受験者ID = 'SW1877';
+
+2.
+SELECT 受験者ID AS 合格者ID
+  FROM 試験結果
+ WHERE 午前 >= 60
+   AND 午後１ + 午後２ >= 120
+   AND 論述 >= (午前１ + 午後１ + 午後２ + 論述) * 0.3;
+
+
+5-2
+1.
+UPDATE 回答者
+   SET 国名 = CASE SUBSTRING(TRIM(メールアドレス), LENGTH(メールアドレス)-1, 2)
+              WHEN 'jp' THEN '日本'
+              WHEN 'uk' THEN 'イギリス'
+              WHEN 'cn' THEN '中国'
+              WHEN 'fr' THEN 'フランス'
+              WHEN 'vn' THEN 'ベトナム'
+              END;
+
+2.
+SELECT TRIM(メールアドレス) AS メールアドレス,
+       CASE WHEN 年齢 >= 20 THEN '20代'
+            WHEN 年齢 >= 30 THEN '30代'
+            WHEN 年齢 >= 40 THEN '40代'
+            WHEN 年齢 >= 50 THEN '50代' END
+       || ':' ||
+       CASE WHEN 性別 = 'M' THEN '男性'
+            WHEN 性別 = 'F' THEN '女性'
+       END AS 属性
+  FROM 回答者;
+
+
+5-3
+1.
+UPDATE 受注
+   SET 文字数 = LENGTH(REPLACE(文字, ' ', ''));
+
+2.
+SELECT 受注日, 受注ID,
+       LENGTH(REPLACE(文字, ' ', '')) AS 文字数, 
+       CASE COALESCE(書体コード, '1')
+            WHEN 書体コード = '1' THEN 'ブロック体'
+            WHEN 書体コード = '2' THEN '筆記体'
+            WHEN 書体コード = '3' THEN '草書体'
+            WHEN 書体コード IS NULL THEN 'ブロック体' → ×
+            END AS 書体名,
+       CASE COALESCE(書体コード, '1')
+            WHEN 書体コード = '1' THEN 100
+            WHEN 書体コード = '2' THEN 150
+            WHEN 書体コード = '3' THEN 200
+            WHEN 書体コード IS NULL THEN 100 → ×
+       END AS 単価,
+       CASE WHEN LENGTH(REPLACE(文字, ' ', '')) > 10 THEN 500
+       ELSE 0
+       END AS 特別加工料
+  FROM 受注
+ORDER BY 受注日, 受注ID;
+
+3.
+UPDATE 受注
+   SET 文字 = REPLACE(文字, ' ', '★')
+ WHERE 受注ID = '113';
